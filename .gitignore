@@ -2,3 +2,4 @@ app/config/local.neon
 tests/
 vendor/
 .idea/
+node_modules/
