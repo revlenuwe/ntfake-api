@@ -8,5 +8,5 @@ use Nette\Application\UI\Presenter;
 
 class JsonPresenter extends Presenter
 {
-    
+
 }
