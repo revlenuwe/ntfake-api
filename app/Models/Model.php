@@ -24,6 +24,7 @@ abstract class Model
         return $this->getAll()->get($id);
     }
 
+
     public function create(array $values) {
         return $this->getAll()->insert($values);
     }

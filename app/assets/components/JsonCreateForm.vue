@@ -29,8 +29,8 @@
         </div>
 
         <div class="form-group">
-            <label for="bodyArea">Body</label>
-            <textarea id="bodyArea"  cols="30" rows="6" class="form-control" placeholder="Body" v-model.trim="$v.body.$model" />
+            <label for="bodyArea">Json</label>
+            <textarea id="bodyArea"  cols="30" rows="6" class="form-control" placeholder="Json" v-model.trim="$v.body.$model" />
             <div class="error" v-if="!$v.body.isJson">Invalid json</div>
             <div class="error" v-if="formError && !$v.body.required">Field is required</div>
         </div>

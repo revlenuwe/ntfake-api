@@ -34,17 +34,23 @@ class JsonPresenter extends Presenter
                 $fakeApi = $this->createFakeApi($query);
 
                 $this->sendJson([
-                    'api' => $_SERVER['HTTP_HOST'].'/api/'.$fakeApi->sign//$this->link('Api:Json:response', $fakeResponse->sign)
+                    'api' => $_SERVER['HTTP_HOST'].$this->link('Json:returnResponse', $fakeApi->sign)
                 ]);
             }
-
             $this->sendResponseWithCode(['error' => 'validation error'],IResponse::S400_BAD_REQUEST);
-//            $this->response->setCode(IResponse::S400_BAD_REQUEST);
-//            $this->sendResponse(new JsonResponse(['error' => 'validation error']));
         }
-//        $this->response->setCode(IResponse::S405_METHOD_NOT_ALLOWED);
-//        $this->sendResponse(new JsonResponse(['error' => 'method not allowed']));
         $this->sendResponseWithCode(['error' => 'method not allowed'],IResponse::S405_METHOD_NOT_ALLOWED);
+    }
+
+    public function actionReturnResponse(string $sign) {
+        $fakeApi = $this->json->getBySign($sign)->fetch();
+        if($fakeApi) {
+            if($this->request->isMethod($fakeApi->method)){
+                $this->sendResponseWithCode(json_decode($fakeApi->json),$fakeApi->status_code);
+            }
+            $this->sendResponseWithCode(['error' => 'method not allowed'],IResponse::S405_METHOD_NOT_ALLOWED);
+        }
+        $this->sendResponseWithCode(['error' => 'endpoint does not exist'],IResponse::S404_NOT_FOUND);
     }
 
     private function createFakeApi($query) {
@@ -52,7 +58,7 @@ class JsonPresenter extends Presenter
             'sign' => $this->randomStr(6),
             'method' => $query->method,
             'status_code' => $query->code,
-            'json' => $query->body,
+            'json' => $this->normalizeJson($query->body),
         ]);
     }
 
@@ -70,6 +76,10 @@ class JsonPresenter extends Presenter
     function isJson($str) {
         json_decode($str);
         return (json_last_error() == JSON_ERROR_NONE);
+    }
+
+    private function normalizeJson($string) {
+        return str_replace("\\n", "", $string);
     }
 
     private function randomStr($len) {
