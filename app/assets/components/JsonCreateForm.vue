@@ -8,10 +8,24 @@
                 <div class="form-group">
                     <label for="statusInp">Status Code</label>
                     <select class=" input selectpicker" id="statusInp"  v-model.trim="$v.code.$model">
-                        <option selected value="200">200 OK</option>
-                        <option  value="201">201 Created</option>
-                        <option  value="202">202 Accepted</option>
-                        <option  value="302">302 Found</option>
+                        <option value="200">200 OK</option>
+                        <option value="201">201 Created</option>
+                        <option value="202">202 Accepted</option>
+                        <option value="204">204 No Content</option>
+                        <option value="301">301 Moved Permanently</option>
+                        <option value="302">302 Found</option>
+                        <option value="307">307 Temporary Redirect</option>
+                        <option value="308">308 Permanent Redirect</option>
+                        <option value="400">400 Bad Request</option>
+                        <option value="401">401 Unauthorized</option>
+                        <option value="403">403 Forbidden</option>
+                        <option value="404">404 Not Found</option>
+                        <option value="405">405 Method Not Allowed</option>
+                        <option value="429">429 Too Many Requests</option>
+                        <option value="500">500 Internal Server Error</option>
+                        <option value="502">502 Bad Gateway</option>
+                        <option value="503">503 Service Unavailable</option>
+                        <option value="504">504 Gateway Timeout</option>
                     </select>
                     <div class="error" v-if="!$v.code.required">Field is required</div>
                 </div>
@@ -29,7 +43,7 @@
         </div>
 
         <div class="form-group">
-            <label for="bodyArea">Json</label>
+            <label for="bodyArea">Json Response</label>
             <textarea id="bodyArea"  cols="30" rows="6" class="form-control" placeholder="Json" v-model.trim="$v.body.$model" />
             <div class="error" v-if="!$v.body.isJson">Invalid json</div>
             <div class="error" v-if="formError && !$v.body.required">Field is required</div>
@@ -39,8 +53,6 @@
                 {{ apiUrl }}
             </div>
         </div>
-
-
 
         <button type="submit" class="btn btn-primary">Create</button>
     </form>

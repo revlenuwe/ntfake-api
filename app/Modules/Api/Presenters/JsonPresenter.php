@@ -18,7 +18,9 @@ class JsonPresenter extends Presenter
     protected $response;
     protected $json;
 
-    protected $allowedStatusCodes = [200,201,202,301,302,307,308,400,401,402,403,404,500,502];
+    protected $allowedStatusCodes = [
+        200,201,202,204,301,302,307,308,400,401,402,403,404,405,409,500,502,503,504
+    ];
 
     public function __construct(Request $request,Response $response,Json $json){
         $this->request = $request;
@@ -70,7 +72,7 @@ class JsonPresenter extends Presenter
      * require https://github.com/andersao/laravel-validator
      */
     public function validateQuery($query) {
-        return $this->isJson($query->body) && Validators::isInRange($query->method,['get','post']) && Validators::isInRange($query->code,$this->allowedStatusCodes);
+        return $this->isJson($query->body) && Validators::isInRange($query->method,['get','post']) && in_array($query->code,$this->allowedStatusCodes);
     }
 
     function isJson($str) {
