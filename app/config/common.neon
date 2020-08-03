@@ -20,3 +20,5 @@ di:
 
 services:
 	router: App\Router\RouterFactory::createRouter
+	services:
+	    App\Models\Json

@@ -692,11 +692,11 @@
 .text-primary:hover {
     color: #687ded !important;
 }
-.rounded {
-    position: absolute;
-    width: 100%;
-    top: -11px;
-}
+/*.rounded {*/
+/*    !*position: absolute;*!*/
+/*    width: 100%;*/
+/*    top: -11px;*/
+/*}*/
 @media screen and (max-width: 992px) {
     .rounded {
         top: -1px;

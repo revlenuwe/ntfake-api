@@ -21,7 +21,7 @@
                     <label for="methodInp">Method</label>
                     <select class=" input selectpicker" id="methodInp" v-model.trim="$v.method.$model">
                         <option selected value="get">GET</option>
-                        <option value="post">GET</option>
+                        <option value="post">POST</option>
                     </select>
                     <div class="error" v-if="!$v.method.required">Field is required</div>
                 </div>
@@ -34,9 +34,13 @@
             <div class="error" v-if="!$v.body.isJson">Invalid json</div>
             <div class="error" v-if="formError && !$v.body.required">Field is required</div>
         </div>
-        <div class="form-group mb-32">
-            <p class="text-gray mb-0">Lorem</p>
+        <div class="mb-30" v-if="apiUrl">
+            <div class="bg_brand rounded p-2 text-white">
+                {{ apiUrl }}
+            </div>
         </div>
+
+
 
         <button type="submit" class="btn btn-primary">Create</button>
     </form>
@@ -62,6 +66,8 @@
                 code: 200,
                 method: 'get',
                 body: null,
+
+                apiUrl: null,
             }
         },
         methods: {
@@ -69,10 +75,21 @@
                 this.$v.$touch()
                 if(this.$v.$anyError){
                     this.formError = true
+                    this.apiUrl = null
                 }else{
+                    this.formError = false
+                    axios.post('/api/response/create',{
+                        code: this.code, method: this.method, body: this.body
+                    }).then(response => {
+                        this.apiUrl = response.data.api
+                        //this.$v.$reset() - not working as expect
+                        this.body = null
+
+                    })
+
 
                 }
-                
+
 
             }
         },
