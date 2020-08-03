@@ -4,8 +4,8 @@
 namespace App\Models;
 
 
-class Response extends Model
+class Json extends Model
 {
-    protected $table = 'responses';
+    protected $table = 'json_responses';
 
 }
