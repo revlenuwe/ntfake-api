@@ -1,6 +1,6 @@
 NTFake Api
 =================
-A simple Fake JSON generator built with Nette + Vue.js
+A simple Fake JSON API built with Nette + Vue.js
 
 Web Server Setup
 ----------------
