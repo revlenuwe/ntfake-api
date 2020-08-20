@@ -49,8 +49,12 @@
             <div class="error" v-if="formError && !$v.body.required">Field is required</div>
         </div>
         <div class="mb-30" v-if="apiUrl">
-            <div class="bg_brand rounded p-2 text-white">
-                {{ apiUrl }}
+            <div class="bg_brand rounded p-2 text-white d-flex justify-content-between">
+                <b class="mt-2">{{ apiUrl }}</b>
+                <button type="button" v-clipboard:copy="apiUrl" v-clipboard:success="successCopy" class="btn btn-primary p-2">
+                    <i class="fas fa-clone" v-if="copied"></i>
+                    <i class="far fa-clone" v-else></i>
+                </button>
             </div>
         </div>
 
@@ -60,6 +64,7 @@
 
 <script>
     import axios from 'axios';
+
     import { required, minLength } from 'vuelidate/lib/validators'
     const isJson = function (body) {
         try {
@@ -79,6 +84,7 @@
                 method: 'get',
                 body: null,
 
+                copied: false,
                 apiUrl: null,
             }
         },
@@ -90,6 +96,8 @@
                     this.apiUrl = null
                 }else{
                     this.formError = false
+                    this.copied = false
+                    
                     axios.post('/api/response/create',{
                         code: this.code, method: this.method, body: this.body
                     }).then(response => {
@@ -98,12 +106,11 @@
                         this.body = null
 
                     })
-
-
                 }
-
-
-            }
+            },
+            successCopy () {
+                this.copied = true
+            },
         },
         validations: {
             code: {

@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import axios from 'axios'
 import Vuelidate from "vuelidate";
+import VueClipboard from 'vue-clipboard2'
 
 Vue.use(Vuelidate)
+Vue.use(VueClipboard)
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 

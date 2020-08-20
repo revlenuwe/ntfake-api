@@ -15,9 +15,10 @@ final class RouterFactory
 	public static function createRouter(): RouteList
 	{
 		$router = new RouteList;
+		$router->addRoute('/', 'Base:App:default');
         $router->addRoute('/api/<sign>', 'Api:Json:returnResponse');
 		$router->addRoute('/api/response/create', 'Api:Json:create');
-		$router->addRoute('<module>/<presenter>/<action>[/<id>]', 'Homepage:default');
+		// $router->addRoute('<module>/<presenter>/<action>[/<id>]', 'Homepage:default');
 
 		return $router;
 	}
